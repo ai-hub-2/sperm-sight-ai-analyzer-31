@@ -29,16 +29,16 @@ const Index = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                مرحباً بك في نظام تحليل الحيوانات المنوية بالذكاء الاصطناعي
+              <h2 className="text-2xl md:text-3xl font-bold text-blue-400 mb-4">
+                مرحباً بك في مختبر سينا للتحاليل الطبية
               </h2>
-              <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
-                نظام طبي متقدم يستخدم نماذج YOLOv8 و DeepSORT لتحليل فيديوهات الحيوانات المنوية 
-                وتوفير تقارير دقيقة وشاملة مجاناً للجميع
+              <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto">
+                مختبر متخصص في التحاليل الطبية المتقدمة باستخدام الذكاء الاصطناعي
+                لتقديم نتائج دقيقة وموثوقة في وقت قياسي
               </p>
-              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-green-800 font-medium">
-                  🚀 النظام مجاني ومتاح للجميع - لا يتطلب تسجيل دخول
+              <div className="mt-6 p-4 bg-green-900/30 border border-green-600/30 rounded-lg">
+                <p className="text-green-400 font-medium">
+                  🔬 خبرة ودقة تحدد الأمان - تحاليل احترافية متقدمة
                 </p>
               </div>
             </div>
@@ -50,11 +50,11 @@ const Index = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                تحليل فيديو بالذكاء الاصطناعي
+              <h2 className="text-xl md:text-2xl font-bold text-blue-400 mb-2">
+                تحليل طبي بالذكاء الاصطناعي
               </h2>
-              <p className="text-gray-600 text-sm md:text-base">
-                قم برفع فيديو الحيوانات المنوية للحصول على تحليل مفصل مجاناً
+              <p className="text-gray-300 text-sm md:text-base">
+                قم برفع عينة الفحص للحصول على تحليل مفصل ودقيق
               </p>
             </div>
             
@@ -76,11 +76,11 @@ const Index = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                نتائج التحليل والتقارير
+              <h2 className="text-xl md:text-2xl font-bold text-blue-400 mb-2">
+                نتائج التحليل والتقارير الطبية
               </h2>
-              <p className="text-gray-600 text-sm md:text-base">
-                عرض مفصل لنتائج تحليل الحيوانات المنوية والتوصيات الطبية
+              <p className="text-gray-300 text-sm md:text-base">
+                عرض مفصل لنتائج التحاليل والتوصيات الطبية المتخصصة
               </p>
             </div>
             
@@ -95,46 +95,46 @@ const Index = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                حول النظام
+              <h2 className="text-xl md:text-2xl font-bold text-blue-400 mb-2">
+                عن مختبر سينا
               </h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="medical-card p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">🎯 الهدف من النظام</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  توفير تحليل دقيق ومجاني للحيوانات المنوية باستخدام أحدث تقنيات الذكاء الاصطناعي، 
-                  مما يساعد الأطباء والمختصين في الحصول على نتائج سريعة وموثوقة دون تكلفة.
+                <h3 className="text-lg font-semibold text-blue-400 mb-4">🏥 رؤيتنا</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  نسعى لتقديم أفضل الخدمات التشخيصية والتحليلية بأحدث التقنيات
+                  والأجهزة المتطورة لضمان الدقة والسرعة في النتائج.
                 </p>
               </div>
 
               <div className="medical-card p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">🔬 التقنيات المستخدمة</h3>
-                <ul className="text-gray-600 text-sm space-y-2">
-                  <li>• YOLOv8 للكشف المتقدم عن الخلايا</li>
-                  <li>• DeepSORT للتتبع الذكي للحركة</li>
-                  <li>• React + TypeScript للواجهة</li>
-                  <li>• Supabase للبيانات والتخزين</li>
-                  <li>• تحليل سحابي متقدم</li>
+                <h3 className="text-lg font-semibold text-blue-400 mb-4">🔬 التقنيات المتقدمة</h3>
+                <ul className="text-gray-300 text-sm space-y-2">
+                  <li>• تحليل بالذكاء الاصطناعي</li>
+                  <li>• أجهزة تشخيصية متطورة</li>
+                  <li>• فحوصات شاملة ودقيقة</li>
+                  <li>• تقارير مفصلة واضحة</li>
+                  <li>• نظام إدارة متكامل</li>
                 </ul>
               </div>
 
               <div className="medical-card p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">🛡️ الخصوصية والأمان</h3>
-                <ul className="text-gray-600 text-sm space-y-2">
-                  <li>• لا يتطلب تسجيل دخول</li>
-                  <li>• حفظ آمن مشفر للبيانات</li>
-                  <li>• عدم مشاركة المعلومات الطبية</li>
-                  <li>• حذف تلقائي للملفات بعد التحليل</li>
+                <h3 className="text-lg font-semibold text-blue-400 mb-4">🛡️ الجودة والاعتماد</h3>
+                <ul className="text-gray-300 text-sm space-y-2">
+                  <li>• اعتماد وزارة الصحة</li>
+                  <li>• شهادات جودة دولية</li>
+                  <li>• كوادر طبية متخصصة</li>
+                  <li>• ضمان دقة النتائج</li>
                 </ul>
               </div>
 
               <div className="medical-card p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">📞 الدعم والمساعدة</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  النظام مفتوح المصدر ومتاح على GitHub. 
-                  يمكنك المساهمة في التطوير أو الحصول على الدعم التقني من خلال المجتمع.
+                <h3 className="text-lg font-semibold text-blue-400 mb-4">📞 خدمة العملاء</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  نوفر خدمة عملاء متميزة على مدار الساعة للإجابة على استفساراتكم
+                  وتقديم الدعم اللازم لضمان راحتكم وثقتكم.
                 </p>
               </div>
             </div>
@@ -147,14 +147,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-900 flex flex-col">
       <MedicalHeader />
       
       <main className="flex-1 container mx-auto px-4 py-4 md:py-8 pb-20 md:pb-8">
         {renderTabContent()}
       </main>
 
-      {/* الشريط السفلي للجوال */}
       {isMobile && (
         <MobileBottomNav 
           activeTab={activeTab} 
@@ -162,24 +161,23 @@ const Index = () => {
         />
       )}
 
-      {/* التنقل العادي للحاسوب */}
       {!isMobile && (
-        <div className="bg-white border-t border-gray-200 px-4 py-4">
+        <div className="bg-gray-800 border-t border-gray-700 px-4 py-4">
           <div className="container mx-auto">
             <div className="flex justify-center space-x-8 rtl:space-x-reverse">
               {[
                 { id: 'dashboard', label: 'الرئيسية' },
-                { id: 'upload', label: 'تحليل فيديو' },
+                { id: 'upload', label: 'تحليل جديد' },
                 { id: 'results', label: 'النتائج' },
-                { id: 'about', label: 'حول النظام' },
+                { id: 'about', label: 'عن المختبر' },
               ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                     activeTab === tab.id
-                      ? 'bg-medical-primary text-white'
-                      : 'text-gray-600 hover:text-medical-primary hover:bg-blue-50'
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'text-gray-300 hover:text-blue-400 hover:bg-gray-700'
                   }`}
                 >
                   {tab.label}
@@ -190,47 +188,43 @@ const Index = () => {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-6 md:py-8">
+      <footer className="bg-gray-800 text-gray-300 py-6 md:py-8 border-t border-gray-700">
         <div className="container mx-auto px-4">
           <div className={`${isMobile ? 'space-y-6' : 'grid grid-cols-1 md:grid-cols-3 gap-8'}`}>
             <div>
-              <h3 className="text-base md:text-lg font-semibold mb-3">
-                تحليل الحيوانات المنوية بالذكاء الاصطناعي
+              <h3 className="text-base md:text-lg font-semibold mb-3 text-blue-400">
+                مختبر سينا للتحاليل الطبية
               </h3>
-              <p className="text-gray-300 text-xs md:text-sm">
-                نظام طبي مجاني ومفتوح المصدر يوفر تحليل دقيق وسريع للحيوانات المنوية 
-                باستخدام أحدث تقنيات الذكاء الاصطناعي
+              <p className="text-gray-400 text-xs md:text-sm">
+                خبرة ودقة تحدد الأمان في مجال التحاليل الطبية المتخصصة
+                باستخدام أحدث التقنيات والأجهزة المتطورة
               </p>
             </div>
             
             <div>
-              <h4 className="text-sm md:text-md font-semibold mb-3">الميزات</h4>
-              <ul className="text-gray-300 text-xs md:text-sm space-y-1">
-                <li>• تحليل مجاني بالذكاء الاصطناعي</li>
-                <li>• تتبع دقيق للخلايا المتحركة</li>
-                <li>• تقارير قابلة للتصدير</li>
-                <li>• واجهة متجاوبة للجوال</li>
+              <h4 className="text-sm md:text-md font-semibold mb-3 text-blue-400">خدماتنا</h4>
+              <ul className="text-gray-400 text-xs md:text-sm space-y-1">
+                <li>• تحاليل شاملة متقدمة</li>
+                <li>• فحوصات تشخيصية دقيقة</li>
+                <li>• تقارير طبية مفصلة</li>
+                <li>• استشارات متخصصة</li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-sm md:text-md font-semibold mb-3">مفتوح المصدر</h4>
-              <ul className="text-gray-300 text-xs md:text-sm space-y-1">
-                <li>• متاح على GitHub</li>
-                <li>• مساهمات المجتمع مرحبة</li>
-                <li>• تطوير مستمر</li>
-                <li>• دعم تقني مجاني</li>
+              <h4 className="text-sm md:text-md font-semibold mb-3 text-blue-400">التواصل</h4>
+              <ul className="text-gray-400 text-xs md:text-sm space-y-1">
+                <li>• خدمة عملاء 24/7</li>
+                <li>• استشارة طبية مجانية</li>
+                <li>• دعم تقني متخصص</li>
+                <li>• نتائج سريعة ودقيقة</li>
               </ul>
             </div>
           </div>
           
           <div className="border-t border-gray-700 pt-4 md:pt-6 mt-6 md:mt-8 text-center">
-            <p className="text-gray-400 text-xs md:text-sm">
-              © 2024 نظام تحليل الحيوانات المنوية بالذكاء الاصطناعي - مجاني للجميع
-            </p>
-            <p className="text-gray-500 text-xs mt-2">
-              مفتوح المصدر على GitHub - مدعوم بـ Supabase + Netlify
+            <p className="text-gray-500 text-xs md:text-sm">
+              © 2024 مختبر سينا للتحاليل الطبية - خبرة ودقة تحدد الأمان
             </p>
           </div>
         </div>

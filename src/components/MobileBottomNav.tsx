@@ -16,7 +16,7 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-2 z-50 safe-area-bottom">
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 px-2 py-2 z-50 safe-area-bottom shadow-2xl">
       <div className="flex justify-around items-center">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -28,8 +28,8 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
               onClick={() => onTabChange(tab.id)}
               className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-0 flex-1 ${
                 isActive
-                  ? 'text-medical-primary bg-blue-50'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'text-blue-400 bg-blue-900/30 shadow-md'
+                  : 'text-gray-400 hover:text-gray-200'
               }`}
             >
               <Icon className={`h-5 w-5 mb-1 ${isActive ? 'animate-pulse' : ''}`} />
