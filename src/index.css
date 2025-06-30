@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* إعداد النظام الطبي - جميع الألوان بصيغة HSL */
+/* إعداد النظام الطبي المجاني - جميع الألوان بصيغة HSL */
 
 @layer base {
   :root {
@@ -50,28 +50,20 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -93,8 +85,19 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     direction: rtl;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* دعم منطقة الأمان في الأجهزة الحديثة */
+  .safe-area-bottom {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
   }
 
   /* دعم اللغة العربية */
@@ -108,7 +111,7 @@
     text-align: left;
   }
 
-  /* تحسينات التصميم الطبي */
+  /* تحسينات التصميم الطبي المجاني */
   .medical-gradient {
     background: linear-gradient(135deg, #0066CC 0%, #004499 100%);
   }
@@ -118,7 +121,7 @@
   }
 
   .medical-button {
-    @apply bg-medical-primary hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105;
+    @apply bg-medical-primary hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95;
   }
 
   .medical-input {
@@ -127,16 +130,42 @@
 
   /* تأثيرات التحميل */
   .loading-spinner {
-    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-medical-primary;
+    @apply animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-b-2 border-medical-primary;
   }
 
   /* تأثيرات النتائج */
   .result-card {
-    @apply medical-card p-6 mb-4 transform transition-all duration-500 hover:scale-102;
+    @apply medical-card p-4 md:p-6 mb-4 transform transition-all duration-500 hover:scale-102;
+  }
+
+  /* تحسينات الجوال */
+  @media (max-width: 768px) {
+    .container {
+      @apply px-3;
+    }
+    
+    .medical-card {
+      @apply shadow-md;
+    }
+    
+    .text-responsive {
+      @apply text-sm;
+    }
+  }
+
+  /* تحسينات اللمس */
+  @media (hover: none) {
+    .hover\:scale-105:hover {
+      transform: none;
+    }
+    
+    .medical-button:active {
+      @apply scale-95 bg-blue-800;
+    }
   }
 }
 
-/* تحسينات إضافية للمحتوى العربي */
+/* تحسينات إضافية للمحتوى العربي والجوال */
 @media (min-width: 768px) {
   .desktop-layout {
     display: grid;
@@ -145,12 +174,42 @@
   }
 }
 
-/* تأثيرات التفاعل */
+/* تأثيرات التفاعل المحسنة للجوال */
 .interactive-element {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.interactive-element:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.interactive-element:active {
+  transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+  .interactive-element:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* تحسينات PWA */
+@media (display-mode: standalone) {
+  body {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* تحسينات أداء الرسوم المتحركة */
+.animate-spin,
+.animate-pulse {
+  will-change: transform;
+}
+
+/* تحسين المسافات للجوال */
+@media (max-width: 640px) {
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+  }
 }
