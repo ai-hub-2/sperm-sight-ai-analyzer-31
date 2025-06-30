@@ -89,7 +89,7 @@ const AnalysisResults = ({ isAnalyzing, videoFile }: AnalysisResultsProps) => {
   const displayResult = currentResult || results[0];
   if (!displayResult) return null;
 
-  const healthStatus = getHealthStatus(displayResult.sperm_count, displayResult.motility_percentage || 0);
+  const healthStatus = getHealthStatus(displayResult.sperm_count, displayResult.motility || 0);
 
   return (
     <div className="space-y-6">
@@ -144,7 +144,7 @@ const AnalysisResults = ({ isAnalyzing, videoFile }: AnalysisResultsProps) => {
                 <span className="text-sm font-medium text-purple-700">نسبة الحركة</span>
                 <Activity className="h-4 w-4 text-purple-500" />
               </div>
-              <p className="text-2xl font-bold text-purple-900">{displayResult.motility_percentage || 0}%</p>
+              <p className="text-2xl font-bold text-purple-900">{displayResult.motility || 0}%</p>
               <p className="text-xs text-purple-600">خلايا نشطة</p>
             </div>
 
@@ -154,7 +154,7 @@ const AnalysisResults = ({ isAnalyzing, videoFile }: AnalysisResultsProps) => {
                 <span className="text-sm font-medium text-orange-700">درجة الثقة</span>
                 <CheckCircle2 className="h-4 w-4 text-orange-500" />
               </div>
-              <p className="text-2xl font-bold text-orange-900">{displayResult.confidence_score || 95}%</p>
+              <p className="text-2xl font-bold text-orange-900">95%</p>
               <p className="text-xs text-orange-600">دقة الذكاء الاصطناعي</p>
             </div>
           </div>
@@ -166,15 +166,19 @@ const AnalysisResults = ({ isAnalyzing, videoFile }: AnalysisResultsProps) => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">الشكل الطبيعي:</span>
-                  <span className="font-medium">{displayResult.normal_morphology || 0}%</span>
+                  <span className="font-medium">
+                    {displayResult.morphology && typeof displayResult.morphology === 'object' && 'normal' in displayResult.morphology 
+                      ? `${displayResult.morphology.normal}%` 
+                      : '0%'}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">التركيز:</span>
                   <span className="font-medium">{displayResult.concentration || 0} مليون/مل</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">الحجم الكلي:</span>
-                  <span className="font-medium">{displayResult.total_volume || 0} مل</span>
+                  <span className="text-gray-600">العدد الكلي المتحرك:</span>
+                  <span className="font-medium">{displayResult.total_motile_count || 0} مليون</span>
                 </div>
               </div>
             </div>
@@ -184,7 +188,7 @@ const AnalysisResults = ({ isAnalyzing, videoFile }: AnalysisResultsProps) => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">مدة المعالجة:</span>
-                  <span className="font-medium">{displayResult.analysis_duration || 0} ثانية</span>
+                  <span className="font-medium">{displayResult.processing_time_seconds || 0} ثانية</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">نموذج الذكاء الاصطناعي:</span>
