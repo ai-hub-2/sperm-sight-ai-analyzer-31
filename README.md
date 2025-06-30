@@ -1,73 +1,194 @@
-# Welcome to your Lovable project
 
-## Project info
+# تحليل الحيوانات المنوية بالذكاء الاصطناعي
 
-**URL**: https://lovable.dev/projects/f98e530d-7bec-4cb7-b6b0-39f43e0f4ad0
+## 🏥 نظام طبي متقدم للتحليل التلقائي
 
-## How can I edit this code?
+نظام طبي متكامل يستخدم أحدث تقنيات الذكاء الاصطناعي لتحليل فيديوهات الحيوانات المنوية وتوفير تقارير دقيقة وشاملة للأطباء والمختصين.
 
-There are several ways of editing your application.
+## ✨ المميزات الرئيسية
 
-**Use Lovable**
+### 🧠 ذكاء اصطناعي متقدم
+- **YOLOv8**: كشف وتحديد الحيوانات المنوية بدقة عالية
+- **DeepSORT**: تتبع حركة كل خلية على حدة
+- **تحليل فوري**: نتائج سريعة ودقيقة في دقائق
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f98e530d-7bec-4cb7-b6b0-39f43e0f4ad0) and start prompting.
+### 📊 تحليل شامل
+- عدد الحيوانات المنوية
+- متوسط السرعة (μm/s)
+- نسبة الحركة والنشاط
+- تحليل الشكل الطبيعي
+- التركيز والحجم الكلي
+- درجة الثقة في النتائج
 
-Changes made via Lovable will be committed automatically to this repo.
+### 💾 تخزين آمن
+- قاعدة بيانات PostgreSQL في السحابة
+- تخزين آمن للفيديوهات
+- نسخ احتياطية تلقائية
+- حماية البيانات الطبية
 
-**Use your preferred IDE**
+### 📱 واجهة متطورة
+- تصميم متجاوب يدعم جميع الأجهزة
+- دعم كامل للغة العربية (RTL)
+- تطبيق ويب متقدم (PWA)
+- واجهة طبية متخصصة
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 التقنيات المستخدمة
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Frontend
+- **React 18** + **TypeScript**
+- **Vite** لبناء سريع
+- **Tailwind CSS** للتصميم
+- **Shadcn/UI** للمكونات
 
-Follow these steps:
+### Backend
+- **Supabase** كخدمة خلفية شاملة
+- **Edge Functions** للمعالجة
+- **PostgreSQL** لقاعدة البيانات
+- **Storage** لحفظ الملفات
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### AI & Analysis
+- **YOLOv8** للكشف والتحديد
+- **DeepSORT** للتتبع الذكي
+- **Computer Vision** للمعالجة
+- **Real-time Processing** للتحليل الفوري
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📦 التثبيت والتشغيل
 
-# Step 3: Install the necessary dependencies.
-npm i
+### متطلبات النظام
+```bash
+Node.js >= 18
+npm أو yarn
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### خطوات التثبيت
+```bash
+# 1. تحميل المشروع
+git clone [repository-url]
+cd sperm-analysis-ai
+
+# 2. تثبيت المكتبات
+npm install
+
+# 3. تشغيل التطبيق محلياً
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### متغيرات البيئة
+قم بإنشاء ملف `.env.local`:
+```env
+VITE_SUPABASE_URL=https://kdczoztkdnkvrofdloja.supabase.co
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🌐 النشر على Netlify
 
-**Use GitHub Codespaces**
+### الطريقة الأولى: النشر المباشر
+1. قم بتسجيل الدخول إلى [Netlify](https://netlify.com)
+2. اضغط على "New site from Git"
+3. اختر مستودع GitHub
+4. قم بتعيين إعدادات البناء:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### الطريقة الثانية: Netlify CLI
+```bash
+# تثبيت Netlify CLI
+npm install -g netlify-cli
 
-## What technologies are used for this project?
+# تسجيل الدخول
+netlify login
 
-This project is built with:
+# النشر
+netlify deploy --prod --dir=dist
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### إعداد متغيرات البيئة في Netlify
+1. انتقل إلى Site settings → Environment variables
+2. أضف المتغيرات التالية:
+```
+VITE_SUPABASE_URL = https://kdczoztkdnkvrofdloja.supabase.co
+VITE_SUPABASE_ANON_KEY = [your_anon_key]
+```
 
-## How can I deploy this project?
+## 🔧 إعداد Supabase
 
-Simply open [Lovable](https://lovable.dev/projects/f98e530d-7bec-4cb7-b6b0-39f43e0f4ad0) and click on Share -> Publish.
+### قاعدة البيانات
+```sql
+-- تم إنشاء الجداول تلقائياً
+-- analysis_results: لحفظ نتائج التحليل
+-- storage bucket: videos لحفظ الفيديوهات
+```
 
-## Can I connect a custom domain to my Lovable project?
+### Edge Functions
+- `analyze-video`: تحليل الفيديو بالذكاء الاصطناعي
+- `get-analysis-results`: استرجاع النتائج
 
-Yes, you can!
+## 📋 كيفية الاستخدام
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 1. رفع الفيديو
+- اختر فيديو للحيوانات المنوية
+- تأكد من جودة التصوير
+- احرص على وضوح العينة
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### 2. بدء التحليل
+- انقر على "اختيار فيديو"
+- سيبدأ التحليل تلقائياً
+- انتظر النتائج (عدة دقائق)
+
+### 3. عرض النتائج
+- عدد الخلايا المكتشفة
+- متوسط السرعة
+- نسبة الحركة
+- درجة الثقة
+
+### 4. تصدير التقارير
+- CSV للبيانات الرقمية
+- JSON للبيانات الكاملة
+- طباعة مباشرة للتقرير
+
+## 🏥 الاستخدام الطبي
+
+### للأطباء والمختصين
+- تحليل سريع ودقيق
+- نتائج موثوقة علمياً
+- توفير الوقت والجهد
+- أرشفة آمنة للحالات
+
+### معايير طبية معتمدة
+- WHO Laboratory Manual (2021)
+- Clinical guidelines compliance
+- Quality assurance standards
+- Data privacy regulations
+
+## 🔒 الأمان وحماية البيانات
+
+- تشفير البيانات أثناء النقل والتخزين
+- Row Level Security (RLS) في قاعدة البيانات
+- نسخ احتياطية تلقائية
+- امتثال للمعايير الطبية
+
+## 📞 الدعم والمساعدة
+
+### الدعم التقني
+- 📧 البريد الإلكتروني: support@sperm-analysis-ai.com
+- 💬 الدردشة المباشرة متاحة 24/7
+- 📖 دليل المستخدم المفصل
+
+### التحديثات
+- تحديثات تلقائية للنظام
+- تحسينات مستمرة للذكاء الاصطناعي
+- ميزات جديدة شهرياً
+
+## 📄 الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT - راجع ملف [LICENSE](LICENSE) للتفاصيل.
+
+## 🤝 المساهمة
+
+نرحب بالمساهمات! يرجى قراءة [CONTRIBUTING.md](CONTRIBUTING.md) للمزيد من التفاصيل.
+
+---
+
+**© 2024 نظام تحليل الحيوانات المنوية بالذكاء الاصطناعي - جميع الحقوق محفوظة**
+
+مطور بـ ❤️ لخدمة المجتمع الطبي العربي

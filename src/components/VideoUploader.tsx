@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Upload, Video, FileText, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,35 +18,22 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
 
   const handleFileSelect = (file: File) => {
     // التحقق من نوع الملف
-    const allowedTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/wmv'];
+    const allowedTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/webm'];
     if (!allowedTypes.includes(file.type)) {
-      toast.error('يرجى اختيار ملف فيديو صحيح (MP4, AVI, MOV, WMV)');
+      toast.error('يرجى اختيار ملف فيديو صحيح (MP4, AVI, MOV, WMV, WebM)');
       return;
     }
 
-    // التحقق من حجم الملف (أقل من 100MB)
-    if (file.size > 100 * 1024 * 1024) {
-      toast.error('حجم الملف كبير جداً. يرجى اختيار ملف أقل من 100 ميجابايت');
+    // التحقق من حجم الملف (أقل من 500MB)
+    if (file.size > 500 * 1024 * 1024) {
+      toast.error('حجم الملف كبير جداً. يرجى اختيار ملف أقل من 500 ميجابايت');
       return;
     }
 
     setSelectedFile(file);
-    simulateUpload(file);
-  };
-
-  const simulateUpload = (file: File) => {
-    setUploadProgress(0);
-    const interval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          onVideoSelect(file);
-          toast.success('تم رفع الفيديو بنجاح');
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 200);
+    setUploadProgress(100);
+    onVideoSelect(file);
+    toast.success('تم اختيار الفيديو. جاري بدء التحليل...');
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -92,7 +78,7 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
               dragOver
                 ? 'border-medical-primary bg-blue-50'
                 : 'border-gray-300 hover:border-medical-primary hover:bg-gray-50'
-            }`}
+            } ${isAnalyzing ? 'opacity-50 pointer-events-none' : ''}`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -102,7 +88,7 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
               اسحب الفيديو هنا أو اضغط للاختيار
             </p>
             <p className="text-sm text-gray-500 mb-4">
-              يدعم ملفات MP4, AVI, MOV, WMV (أقل من 100 ميجابايت)
+              يدعم ملفات MP4, AVI, MOV, WMV, WebM (أقل من 500 ميجابايت)
             </p>
             <Button
               onClick={() => fileInputRef.current?.click()}
@@ -110,7 +96,7 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
               className="medical-button"
             >
               <Upload className="mr-2 h-4 w-4" />
-              اختيار فيديو
+              {isAnalyzing ? 'جاري التحليل...' : 'اختيار فيديو'}
             </Button>
             <input
               ref={fileInputRef}
@@ -138,20 +124,17 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
                     النوع: {selectedFile.type}
                   </p>
                   
-                  {uploadProgress > 0 && uploadProgress < 100 && (
-                    <div className="mt-3">
-                      <div className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>جاري الرفع...</span>
-                        <span>{uploadProgress}%</span>
-                      </div>
-                      <Progress value={uploadProgress} className="h-2" />
+                  {uploadProgress === 100 && !isAnalyzing && (
+                    <div className="flex items-center mt-2 text-green-600">
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      <span className="text-sm">جاهز للتحليل</span>
                     </div>
                   )}
 
-                  {uploadProgress === 100 && (
-                    <div className="flex items-center mt-2 text-green-600">
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                      <span className="text-sm">تم الرفع بنجاح</span>
+                  {isAnalyzing && (
+                    <div className="flex items-center mt-2 text-blue-600">
+                      <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full mr-2"></div>
+                      <span className="text-sm">جاري التحليل بالذكاء الاصطناعي...</span>
                     </div>
                   )}
                 </div>
@@ -164,12 +147,13 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
             <div className="flex items-start space-x-2 rtl:space-x-reverse">
               <AlertCircle className="h-5 w-5 text-amber-500 mt-0.5" />
               <div>
-                <h4 className="font-medium text-amber-800 mb-2">إرشادات مهمة:</h4>
+                <h4 className="font-medium text-amber-800 mb-2">إرشادات مهمة للحصول على أفضل النتائج:</h4>
                 <ul className="text-sm text-amber-700 space-y-1">
-                  <li>• تأكد من وضوح الفيديو وجودة التصوير</li>
-                  <li>• يفضل أن يكون الفيديو مدته بين 30 ثانية إلى 5 دقائق</li>
-                  <li>• تأكد من أن العينة مركزة تحت المجهر</li>
-                  <li>• تجنب الاهتزاز أثناء التصوير</li>
+                  <li>• تأكد من وضوح الفيديو وجودة التصوير العالية</li>
+                  <li>• يفضل أن يكون الفيديو مدته بين دقيقة إلى 10 دقائق</li>
+                  <li>• تأكد من أن العينة مركزة تحت المجهر بوضوح</li>
+                  <li>• تجنب الاهتزاز أثناء التصوير لضمان دقة التتبع</li>
+                  <li>• استخدم إضاءة مناسبة ومتجانسة</li>
                 </ul>
               </div>
             </div>

@@ -9,6 +9,54 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analysis_results: {
+        Row: {
+          analysis_duration: number | null
+          concentration: number | null
+          confidence_score: number | null
+          created_at: string
+          filename: string
+          id: string
+          motility_percentage: number | null
+          normal_morphology: number | null
+          speed_avg: number
+          sperm_count: number
+          total_volume: number | null
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          analysis_duration?: number | null
+          concentration?: number | null
+          confidence_score?: number | null
+          created_at?: string
+          filename: string
+          id?: string
+          motility_percentage?: number | null
+          normal_morphology?: number | null
+          speed_avg: number
+          sperm_count: number
+          total_volume?: number | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          analysis_duration?: number | null
+          concentration?: number | null
+          confidence_score?: number | null
+          created_at?: string
+          filename?: string
+          id?: string
+          motility_percentage?: number | null
+          normal_morphology?: number | null
+          speed_avg?: number
+          sperm_count?: number
+          total_volume?: number | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       email_messages: {
         Row: {
           attachments: Json | null

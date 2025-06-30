@@ -5,20 +5,20 @@ import MedicalHeader from '@/components/MedicalHeader';
 import VideoUploader from '@/components/VideoUploader';
 import AnalysisResults from '@/components/AnalysisResults';
 import Dashboard from '@/components/Dashboard';
+import { useSpermAnalysis } from '@/hooks/useSpermAnalysis';
 import { Home, Upload, BarChart3, Settings } from 'lucide-react';
 
 const Index = () => {
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const { isAnalyzing, analyzeVideo } = useSpermAnalysis();
 
-  const handleVideoSelect = (file: File) => {
+  const handleVideoSelect = async (file: File) => {
     setSelectedVideo(file);
-    setIsAnalyzing(true);
-    
-    // محاكاة وقت التحليل
-    setTimeout(() => {
-      setIsAnalyzing(false);
-    }, 10000); // 10 ثواني
+    try {
+      await analyzeVideo(file);
+    } catch (error) {
+      console.error('فشل في تحليل الفيديو:', error);
+    }
   };
 
   return (
@@ -34,7 +34,7 @@ const Index = () => {
             </TabsTrigger>
             <TabsTrigger value="upload" className="flex items-center space-x-2 rtl:space-x-reverse">
               <Upload className="h-4 w-4" />
-              <span>رفع الفيديو</span>
+              <span>تحليل فيديو</span>
             </TabsTrigger>
             <TabsTrigger value="results" className="flex items-center space-x-2 rtl:space-x-reverse">
               <BarChart3 className="h-4 w-4" />
@@ -49,24 +49,29 @@ const Index = () => {
           <TabsContent value="dashboard" className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                مرحباً بك في نظام تحليل الحيوانات المنوية
+                مرحباً بك في نظام تحليل الحيوانات المنوية بالذكاء الاصطناعي
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                نظام طبي متقدم يستخدم الذكاء الاصطناعي لتحليل فيديوهات الحيوانات المنوية 
-                وتوفير تقارير دقيقة وشاملة للأطباء والمختصين
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                نظام طبي متقدم يستخدم نماذج YOLOv8 و DeepSORT لتحليل فيديوهات الحيوانات المنوية 
+                وتوفير تقارير دقيقة وشاملة للأطباء والمختصين مع دعم كامل للذكاء الاصطناعي
               </p>
+              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-medium">
+                  🚀 النظام جاهز للاستخدام ومتصل بقاعدة البيانات السحابية
+                </p>
+              </div>
             </div>
             <Dashboard />
           </TabsContent>
 
           <TabsContent value="upload" className="space-y-6">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  رفع فيديو للتحليل
+                  تحليل فيديو بالذكاء الاصطناعي
                 </h2>
                 <p className="text-gray-600">
-                  قم برفع فيديو الحيوانات المنوية للحصول على تحليل مفصل باستخدام الذكاء الاصطناعي
+                  قم برفع فيديو الحيوانات المنوية للحصول على تحليل مفصل باستخدام YOLOv8 + DeepSORT
                 </p>
               </div>
               
@@ -92,7 +97,7 @@ const Index = () => {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  نتائج التحليل
+                  نتائج التحليل والتقارير
                 </h2>
                 <p className="text-gray-600">
                   عرض مفصل لنتائج تحليل الحيوانات المنوية والتوصيات الطبية
@@ -190,27 +195,29 @@ const Index = () => {
               <h3 className="text-lg font-semibold mb-4">تحليل الحيوانات المنوية بالذكاء الاصطناعي</h3>
               <p className="text-gray-300 text-sm">
                 نظام طبي متقدم يوفر تحليل دقيق وسريع للحيوانات المنوية 
-                باستخدام أحدث تقنيات الذكاء الاصطناعي
+                باستخدام أحدث تقنيات الذكاء الاصطناعي YOLOv8 + DeepSORT
               </p>
             </div>
             
             <div>
-              <h4 className="text-md font-semibold mb-3">الميزات</h4>
+              <h4 className="text-md font-semibold mb-3">الميزات المتقدمة</h4>
               <ul className="text-gray-300 text-sm space-y-1">
-                <li>• تحليل سريع ودقيق</li>
-                <li>• تقارير مفصلة</li>
-                <li>• واجهة سهلة الاستخدام</li>
-                <li>• دعم متعدد الصيغ</li>
+                <li>• تحليل فوري بالذكاء الاصطناعي</li>
+                <li>• تتبع دقيق للخلايا المتحركة</li>
+                <li>• تقارير مفصلة قابلة للتصدير</li>
+                <li>• حفظ آمن في السحابة</li>
+                <li>• واجهة طبية متخصصة</li>
               </ul>
             </div>
             
             <div>
               <h4 className="text-md font-semibold mb-3">التقنيات المستخدمة</h4>
               <ul className="text-gray-300 text-sm space-y-1">
-                <li>• YOLOv8 للكشف</li>
-                <li>• DeepSORT للتتبع</li>
-                <li>• React للواجهة</li>
-                <li>• FastAPI للخادم</li>
+                <li>• YOLOv8 للكشف المتقدم</li>
+                <li>• DeepSORT للتتبع الذكي</li>
+                <li>• React + TypeScript</li>
+                <li>• Supabase Backend</li>
+                <li>• Edge Functions</li>
               </ul>
             </div>
           </div>
@@ -218,6 +225,9 @@ const Index = () => {
           <div className="border-t border-gray-700 pt-6 mt-8 text-center">
             <p className="text-gray-400 text-sm">
               © 2024 نظام تحليل الحيوانات المنوية بالذكاء الاصطناعي. جميع الحقوق محفوظة.
+            </p>
+            <p className="text-gray-500 text-xs mt-2">
+              مدعوم بـ Supabase + Edge Functions - جاهز للنشر على Netlify
             </p>
           </div>
         </div>
