@@ -11,111 +11,46 @@ export type Database = {
     Tables: {
       analysis_results: {
         Row: {
-          analysis_duration: number | null
           concentration: number | null
-          confidence_score: number | null
           created_at: string
           filename: string
           id: string
-          motility_percentage: number | null
-          normal_morphology: number | null
+          morphology: Json | null
+          motility: number | null
+          movement_pattern: Json
+          processing_time_seconds: number | null
           speed_avg: number
           sperm_count: number
-          total_volume: number | null
-          updated_at: string
+          total_motile_count: number | null
           video_url: string | null
         }
         Insert: {
-          analysis_duration?: number | null
           concentration?: number | null
-          confidence_score?: number | null
           created_at?: string
           filename: string
           id?: string
-          motility_percentage?: number | null
-          normal_morphology?: number | null
+          morphology?: Json | null
+          motility?: number | null
+          movement_pattern: Json
+          processing_time_seconds?: number | null
           speed_avg: number
           sperm_count: number
-          total_volume?: number | null
-          updated_at?: string
+          total_motile_count?: number | null
           video_url?: string | null
         }
         Update: {
-          analysis_duration?: number | null
           concentration?: number | null
-          confidence_score?: number | null
           created_at?: string
           filename?: string
           id?: string
-          motility_percentage?: number | null
-          normal_morphology?: number | null
+          morphology?: Json | null
+          motility?: number | null
+          movement_pattern?: Json
+          processing_time_seconds?: number | null
           speed_avg?: number
           sperm_count?: number
-          total_volume?: number | null
-          updated_at?: string
+          total_motile_count?: number | null
           video_url?: string | null
-        }
-        Relationships: []
-      }
-      email_messages: {
-        Row: {
-          attachments: Json | null
-          body: string | null
-          id: string
-          is_read: boolean | null
-          received_at: string
-          sender_email: string
-          subject: string
-          temp_email_id: string | null
-        }
-        Insert: {
-          attachments?: Json | null
-          body?: string | null
-          id?: string
-          is_read?: boolean | null
-          received_at?: string
-          sender_email: string
-          subject: string
-          temp_email_id?: string | null
-        }
-        Update: {
-          attachments?: Json | null
-          body?: string | null
-          id?: string
-          is_read?: boolean | null
-          received_at?: string
-          sender_email?: string
-          subject?: string
-          temp_email_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "email_messages_temp_email_id_fkey"
-            columns: ["temp_email_id"]
-            isOneToOne: false
-            referencedRelation: "temp_emails"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      temp_emails: {
-        Row: {
-          created_at: string
-          email_address: string
-          expires_at: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          email_address: string
-          expires_at?: string
-          id?: string
-        }
-        Update: {
-          created_at?: string
-          email_address?: string
-          expires_at?: string
-          id?: string
         }
         Relationships: []
       }
@@ -124,10 +59,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      cleanup_expired_emails: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
