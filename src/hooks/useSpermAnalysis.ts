@@ -8,13 +8,13 @@ interface AnalysisResult {
   filename: string;
   sperm_count: number;
   speed_avg: number;
-  motility_percentage: number;
-  normal_morphology: number;
-  concentration: number;
-  total_volume: number;
-  analysis_duration: number;
-  confidence_score: number;
-  video_url: string;
+  motility: number | null;
+  morphology: any;
+  concentration: number | null;
+  total_motile_count: number | null;
+  processing_time_seconds: number | null;
+  movement_pattern: any;
+  video_url: string | null;
   created_at: string;
 }
 
@@ -44,7 +44,13 @@ export const useSpermAnalysis = () => {
       const { data, analysis } = response.data;
       setCurrentResult(data);
       
-      toast.success('تم تحليل الفيديو بنجاح!');
+      // رسالة مختلفة حسب النتيجة
+      if (data.sperm_count === 0) {
+        toast.info('تم تحليل الفيديو - لم يتم العثور على محتوى متحرك');
+      } else {
+        toast.success('تم تحليل الفيديو بنجاح!');
+      }
+      
       console.log('نتائج التحليل:', analysis);
       
       // تحديث قائمة النتائج
@@ -62,15 +68,17 @@ export const useSpermAnalysis = () => {
 
   const fetchResults = async (limit = 10) => {
     try {
-      const response = await supabase.functions.invoke('get-analysis-results', {
-        body: JSON.stringify({ limit }),
-      });
+      const { data, error } = await supabase
+        .from('analysis_results')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(limit);
 
-      if (response.error) {
-        throw new Error(response.error.message);
+      if (error) {
+        throw new Error(error.message);
       }
 
-      setResults(response.data.data || []);
+      setResults(data || []);
     } catch (error) {
       console.error('خطأ في استرجاع النتائج:', error);
       toast.error('فشل في تحميل النتائج السابقة');
@@ -94,7 +102,7 @@ export const useSpermAnalysis = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `sperm_analysis_results.${format}`;
+      link.download = `analysis_results.${format}`;
       link.click();
       URL.revokeObjectURL(url);
 
