@@ -110,7 +110,7 @@
     }
     
     .metric-card {
-      @apply p-6 hover:scale-102;
+      @apply p-6 hover:scale-105;
     }
     
     .medical-button {
