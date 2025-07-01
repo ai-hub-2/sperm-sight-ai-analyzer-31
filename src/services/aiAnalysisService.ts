@@ -171,7 +171,7 @@ export class AIAnalysisService {
 export const defaultAnalysisConfig: AnalysisConfig = {
   pythonBackendUrl: process.env.NODE_ENV === 'development' 
     ? 'http://localhost:8000' 
-    : 'https://your-python-backend.herokuapp.com',
+    : 'https://your-railway-app.railway.app',
   model: 'yolov8n',
   confidenceThreshold: 0.5,
   maxDetections: 200,

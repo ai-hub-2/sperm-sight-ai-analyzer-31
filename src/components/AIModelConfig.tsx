@@ -194,6 +194,19 @@ const AIModelConfig: React.FC<AIModelConfigProps> = ({ onConfigChange, currentCo
             <li>• ذاكرة RAM 8GB أو أكثر</li>
           </ul>
         </div>
+
+        {/* إرشادات Railway.app */}
+        <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+          <h4 className="font-medium text-purple-800 dark:text-purple-300 mb-2">
+            نشر على Railway.app
+          </h4>
+          <ul className="text-sm text-purple-700 dark:text-purple-400 space-y-1">
+            <li>• أنشئ مشروع Python جديد على Railway</li>
+            <li>• ارفع ملفات الخادم الخلفي</li>
+            <li>• أضف متغيرات البيئة المطلوبة</li>
+            <li>• انسخ رابط النشر وضعه أعلاه</li>
+          </ul>
+        </div>
       </CardContent>
     </Card>
   );
