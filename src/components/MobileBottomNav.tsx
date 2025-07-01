@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Upload, BarChart3, Circle } from 'lucide-react';
+import { Home, Upload, BarChart3, Info } from 'lucide-react';
 
 interface MobileBottomNavProps {
   activeTab: string;
@@ -12,7 +12,7 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
     { id: 'home', label: 'الرئيسية', icon: Home },
     { id: 'upload', label: 'رفع', icon: Upload },
     { id: 'results', label: 'النتائج', icon: BarChart3 },
-    { id: 'about', label: 'حول', icon: Circle },
+    { id: 'about', label: 'حول', icon: Info },
   ];
 
   return (
@@ -33,7 +33,7 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
                 {tab.label}
               </span>
               {isActive && (
-                <div className="absolute -top-0.5 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"></div>
+                <div className="absolute -top-0.5 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
               )}
             </button>
           );
