@@ -16,8 +16,8 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 px-2 py-2 z-50 safe-area-bottom shadow-2xl">
-      <div className="flex justify-around items-center">
+    <div className="fixed bottom-0 left-0 right-0 glass-card border-t border-white/20 px-3 py-3 z-50 backdrop-blur-xl">
+      <div className="flex justify-around items-center max-w-md mx-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -26,14 +26,14 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-0 flex-1 ${
+              className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300 min-w-0 flex-1 mx-1 ${
                 isActive
-                  ? 'text-blue-400 bg-blue-900/30 shadow-md'
-                  : 'text-gray-400 hover:text-gray-200'
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg transform scale-105'
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
               }`}
             >
-              <Icon className={`h-5 w-5 mb-1 ${isActive ? 'animate-pulse' : ''}`} />
-              <span className="text-xs font-medium truncate">
+              <Icon className={`h-6 w-6 mb-1 ${isActive ? 'animate-pulse' : ''}`} />
+              <span className="text-xs font-semibold truncate">
                 {tab.label}
               </span>
             </button>

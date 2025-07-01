@@ -3,36 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 217.2 32.6% 17.5%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 213 100% 40%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --radius: 0.5rem;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
+    --radius: 0.75rem;
   }
 }
 
@@ -42,120 +36,106 @@
   }
 
   body {
-    @apply bg-gray-900 text-gray-100;
-    font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    @apply bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-foreground;
+    font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     direction: rtl;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    background-attachment: fixed;
   }
 
-  .safe-area-bottom {
-    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
   }
 
-  .safe-area-top {
-    padding-top: max(1rem, env(safe-area-inset-top));
-  }
-
-  .rtl {
-    direction: rtl;
-    text-align: right;
-  }
-
-  .ltr {
-    direction: ltr;
-    text-align: left;
-  }
-
-  .medical-gradient {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-  }
-
-  .medical-card {
-    @apply bg-gray-800 rounded-lg shadow-2xl border border-gray-700 transition-all duration-300 hover:shadow-blue-500/10 hover:shadow-2xl hover:border-blue-500/30;
+  .gradient-text {
+    @apply bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent;
   }
 
   .medical-button {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-blue-500/20;
+    @apply bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-emerald-500/25;
   }
 
   .medical-input {
-    @apply w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-gray-100 placeholder-gray-400;
+    @apply w-full px-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300 placeholder-gray-300 text-white;
   }
 
   .loading-spinner {
-    @apply animate-spin rounded-full h-6 w-6 md:h-8 md:w-8 border-b-2 border-blue-500;
+    @apply animate-spin rounded-full h-8 w-8 border-3 border-emerald-500 border-t-transparent;
   }
 
-  .result-card {
-    @apply medical-card p-4 md:p-6 mb-4 transform transition-all duration-500 hover:scale-102;
+  .metric-card {
+    @apply glass-card p-6 hover:scale-105 transition-all duration-300 hover:shadow-xl;
   }
 
+  .metric-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center mb-4;
+  }
+
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.6);
+    }
+  }
+
+  /* Mobile optimizations */
   @media (max-width: 768px) {
     .container {
-      @apply px-3;
+      @apply px-4;
     }
     
-    .medical-card {
-      @apply shadow-lg;
+    .metric-card {
+      @apply p-4 hover:scale-102;
     }
     
-    .text-responsive {
-      @apply text-sm;
-    }
-  }
-
-  @media (hover: none) {
-    .hover\:scale-105:hover {
-      transform: none;
-    }
-    
-    .medical-button:active {
-      @apply scale-95 bg-blue-800;
+    .medical-button {
+      @apply py-4 text-lg;
     }
   }
 }
 
-@media (min-width: 768px) {
-  .desktop-layout {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 2rem;
-  }
+/* Interactive elements */
+.interactive-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.interactive-element {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+.interactive-hover:hover {
+  transform: translateY(-4px);
 }
 
-.interactive-element:active {
-  transform: scale(0.98);
+/* Status indicators */
+.status-excellent {
+  @apply bg-gradient-to-r from-green-500 to-emerald-500;
 }
 
-@media (min-width: 768px) {
-  .interactive-element:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
-  }
+.status-good {
+  @apply bg-gradient-to-r from-blue-500 to-cyan-500;
 }
 
-@media (display-mode: standalone) {
-  body {
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: transparent;
-  }
+.status-average {
+  @apply bg-gradient-to-r from-yellow-500 to-orange-500;
 }
 
-.animate-spin,
-.animate-pulse {
-  will-change: transform;
-}
-
-@media (max-width: 640px) {
-  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-y-reverse: 0;
-    margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-  }
+.status-needs-attention {
+  @apply bg-gradient-to-r from-red-500 to-pink-500;
 }
