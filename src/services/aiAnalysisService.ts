@@ -165,13 +165,43 @@ export class AIAnalysisService {
   updateConfig(newConfig: Partial<AnalysisConfig>) {
     this.config = { ...this.config, ...newConfig };
   }
+
+  // دالة للتحقق من حالة الخادم الخلفي
+  async checkBackendHealth(): Promise<boolean> {
+    try {
+      const response = await fetch(`${this.config.pythonBackendUrl}/health`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      return response.ok;
+    } catch (error) {
+      console.error('Backend health check failed:', error);
+      return false;
+    }
+  }
 }
+
+// تحديد URL الخادم الخلفي بناءً على البيئة
+const getBackendUrl = () => {
+  // في حالة الإنتاج على Railway
+  if (window.location.hostname.includes('railway.app')) {
+    return 'https://your-python-backend.railway.app';
+  }
+  
+  // في حالة النشر على Netlify أو منصات أخرى
+  if (window.location.hostname !== 'localhost') {
+    return 'https://your-python-backend.railway.app';
+  }
+  
+  // للتطوير المحلي
+  return 'http://localhost:8000';
+};
 
 // إعدادات افتراضية للتطبيق
 export const defaultAnalysisConfig: AnalysisConfig = {
-  pythonBackendUrl: process.env.NODE_ENV === 'development' 
-    ? 'http://localhost:8000' 
-    : 'https://your-railway-app.railway.app',
+  pythonBackendUrl: getBackendUrl(),
   model: 'yolov8n',
   confidenceThreshold: 0.5,
   maxDetections: 200,
