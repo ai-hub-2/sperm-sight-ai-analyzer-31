@@ -1,202 +1,265 @@
-
-import React, { useState } from 'react';
-import { LanguageProvider } from '@/contexts/LanguageContext';
+import React, { useState, useEffect } from 'react';
 import MobileHeader from '@/components/MobileHeader';
+import MobileBottomNav from '@/components/MobileBottomNav';
+import SettingsModal from '@/components/SettingsModal';
 import UploadZone from '@/components/UploadZone';
 import ResultsDashboard from '@/components/ResultsDashboard';
-import MobileBottomNav from '@/components/MobileBottomNav';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Activity, BarChart3, FileVideo, Image } from 'lucide-react';
 import { useSpermAnalysis } from '@/hooks/useSpermAnalysis';
-import { Button } from '@/components/ui/button';
-import { Settings, Globe, Palette } from 'lucide-react';
 
-const IndexContent = () => {
-  const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
+const Index = () => {
+  const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('home');
   const [showSettings, setShowSettings] = useState(false);
-  const { isAnalyzing, analyzeVideo, currentResult } = useSpermAnalysis();
+  const { results, currentResult, fetchResults, exportResults, deleteResult } = useSpermAnalysis();
 
-  const handleVideoSelect = async (file: File) => {
-    setSelectedVideo(file);
-    try {
-      await analyzeVideo(file);
-      setActiveTab('results');
-    } catch (error) {
-      console.error('فشل في تحليل الفيديو:', error);
-    }
-  };
-
-  const mockResultsData = {
-    totalCount: currentResult?.sperm_count || 1250,
-    motileCount: currentResult?.sperm_count ? Math.floor(currentResult.sperm_count * 0.65) : 812,
-    averageSpeed: currentResult?.speed_avg || 45.2,
-    motilityPercentage: currentResult?.motility || 65,
-    concentration: currentResult?.concentration || 35.4,
-    morphologyNormal: 78
-  };
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
   const renderTabContent = () => {
-    if (showSettings) {
-      return (
-        <div className="space-y-6 px-4 pb-20">
-          <div className="text-center py-4">
-            <h2 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">
-              الإعدادات
-            </h2>
-            <p className="text-green-700 dark:text-green-400">
-              تخصيص التطبيق حسب احتياجاتك
-            </p>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="medical-card">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg flex items-center justify-center">
-                  <Globe className="w-5 h-5 text-green-700 dark:text-green-400" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-green-800 dark:text-green-300">اللغة</h3>
-                  <p className="text-sm text-green-700 dark:text-green-400">اختر لغة التطبيق</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-900/20">
-                  العربية
-                </Button>
-                <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-900/20">
-                  English
-                </Button>
-              </div>
-            </div>
-
-            <div className="medical-card">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg flex items-center justify-center">
-                  <Palette className="w-5 h-5 text-green-700 dark:text-green-400" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-green-800 dark:text-green-300">المظهر</h3>
-                  <p className="text-sm text-green-700 dark:text-green-400">اختر مظهر التطبيق</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-900/20">
-                  فاتح
-                </Button>
-                <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-900/20">
-                  داكن
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <Button 
-            onClick={() => setShowSettings(false)}
-            className="w-full medical-button-primary"
-          >
-            العودة
-          </Button>
-        </div>
-      );
-    }
-
     switch (activeTab) {
       case 'home':
         return (
-          <div className="space-y-6 px-4 pb-20">
-            <div className="text-center py-8">
-              <h2 className="text-2xl font-bold text-green-800 dark:text-green-300 mb-3">
-                مرحبًا بك في نظام التحليل الذكي
-              </h2>
-              <p className="text-green-700 dark:text-green-400 text-base leading-relaxed">
-                تقنية متطورة لتحليل الحيوانات المنوية باستخدام الذكاء الاصطناعي
+          <div className="space-y-6">
+            <div className={`text-center py-8 ${isRTL ? 'text-right' : 'text-left'}`}>
+              <div className="flex justify-center mb-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl flex items-center justify-center">
+                  <Activity className="w-10 h-10 text-green-600 dark:text-green-400 animate-pulse" />
+                </div>
+              </div>
+              <h1 className="text-2xl font-bold text-green-800 dark:text-green-300 mb-2">
+                {t('welcome')}
+              </h1>
+              <p className="text-green-700 dark:text-green-400 mb-6">
+                نظام تحليل متقدم بالذكاء الاصطناعي للحيوانات المنوية
               </p>
+              
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="medical-card text-center">
+                  <div className="text-2xl font-bold text-green-700 dark:text-green-300">
+                    {results.length}
+                  </div>
+                  <div className="text-sm text-green-600 dark:text-green-400">
+                    إجمالي التحاليل
+                  </div>
+                </div>
+                <div className="medical-card text-center">
+                  <div className="text-2xl font-bold text-green-700 dark:text-green-300">
+                    {results.length > 0 ? Math.round(results.reduce((acc, r) => acc + (r.motility || 0), 0) / results.length) : 0}%
+                  </div>
+                  <div className="text-sm text-green-600 dark:text-green-400">
+                    متوسط الحركة
+                  </div>
+                </div>
+              </div>
             </div>
-            <UploadZone 
-              onVideoSelect={handleVideoSelect}
-              isAnalyzing={isAnalyzing}
-            />
           </div>
         );
 
       case 'upload':
-        return (
-          <div className="space-y-6 px-4 pb-20">
-            <div className="text-center py-4">
-              <h2 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">
-                رفع فيديو جديد
-              </h2>
-              <p className="text-green-700 dark:text-green-400">
-                اختر الفيديو المراد تحليله
-              </p>
-            </div>
-            <UploadZone 
-              onVideoSelect={handleVideoSelect}
-              isAnalyzing={isAnalyzing}
-            />
-          </div>
-        );
+        return <UploadZone />;
 
       case 'results':
         return (
-          <div className="px-4 pb-20">
-            <ResultsDashboard 
-              data={mockResultsData}
-              isLoading={isAnalyzing}
-            />
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-green-800 dark:text-green-300">
+                نتائج التحاليل
+              </h2>
+              {results.length > 0 && (
+                <button
+                  onClick={() => exportResults('csv')}
+                  className="text-sm text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300"
+                >
+                  تصدير CSV
+                </button>
+              )}
+            </div>
+
+            {/* Current Result */}
+            {currentResult && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                  آخر نتيجة تحليل
+                </h3>
+                <ResultsDashboard 
+                  data={{
+                    totalCount: currentResult.sperm_count,
+                    motileCount: currentResult.total_motile_count || 0,
+                    averageSpeed: currentResult.speed_avg,
+                    motilityPercentage: currentResult.motility || 0,
+                    concentration: currentResult.concentration || 0,
+                    morphologyNormal: currentResult.morphology?.normal || 0
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Results History */}
+            {results.length > 0 ? (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                  سجل التحاليل السابقة
+                </h3>
+                {results.map((result) => (
+                  <div key={result.id} className="medical-card">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg flex items-center justify-center">
+                          {result.filename.toLowerCase().includes('mp4') || result.filename.toLowerCase().includes('avi') ? 
+                            <FileVideo className="w-4 h-4 text-green-600 dark:text-green-400" /> :
+                            <Image className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          }
+                        </div>
+                        <div>
+                          <p className="font-medium text-green-800 dark:text-green-300 text-sm">
+                            {result.filename}
+                          </p>
+                          <p className="text-xs text-green-600 dark:text-green-400">
+                            {new Date(result.created_at).toLocaleDateString('ar-SA')}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => deleteResult(result.id)}
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        حذف
+                      </button>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-green-600 dark:text-green-400">العدد: </span>
+                        <span className="font-medium text-green-800 dark:text-green-300">
+                          {result.sperm_count.toLocaleString()}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-green-600 dark:text-green-400">السرعة: </span>
+                        <span className="font-medium text-green-800 dark:text-green-300">
+                          {result.speed_avg} μm/s
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-green-600 dark:text-green-400">الحركة: </span>
+                        <span className="font-medium text-green-800 dark:text-green-300">
+                          {result.motility || 0}%
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-green-600 dark:text-green-400">التركيز: </span>
+                        <span className="font-medium text-green-800 dark:text-green-300">
+                          {result.concentration || 0} M/mL
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="w-8 h-8 text-gray-400" />
+                </div>
+                <p className="text-gray-500 dark:text-gray-400">
+                  لا توجد نتائج تحليل حتى الآن
+                </p>
+                <button
+                  onClick={() => setActiveTab('upload')}
+                  className="medical-button-primary mt-4"
+                >
+                  بدء التحليل الأول
+                </button>
+              </div>
+            )}
           </div>
         );
 
       case 'about':
         return (
-          <div className="space-y-6 px-4 pb-20">
-            <div className="text-center py-8">
-              <h2 className="text-2xl font-bold text-green-800 dark:text-green-300 mb-3">
-                حول التطبيق
+          <div className="space-y-6">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl flex items-center justify-center mx-auto mb-4">
+                <Activity className="w-10 h-10 text-green-600 dark:text-green-400" />
+              </div>
+              <h2 className="text-2xl font-bold text-green-800 dark:text-green-300 mb-2">
+                تحليل الحيوانات المنوية بالذكاء الاصطناعي
               </h2>
               <p className="text-green-700 dark:text-green-400">
-                نظام متطور لتحليل العينات الطبية
+                نظام متقدم للتحليل الطبي الآلي
               </p>
             </div>
-            
-            <div className="space-y-4">
-              <div className="medical-card">
-                <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3">المميزات الرئيسية</h3>
-                <ul className="space-y-2 text-sm text-green-700 dark:text-green-400">
-                  <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    تحليل بالذكاء الاصطناعي عالي الدقة
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    نتائج سريعة ومفصلة
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    واجهة سهلة الاستخدام
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    دعم كامل للغة العربية
-                  </li>
-                </ul>
-              </div>
 
-              <div className="medical-card">
-                <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3">معلومات التطبيق</h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-green-700 dark:text-green-400">الإصدار</span>
-                    <span className="font-medium text-green-800 dark:text-green-300">1.0.0</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-700 dark:text-green-400">تاريخ الإصدار</span>
-                    <span className="font-medium text-green-800 dark:text-green-300">2024</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-green-700 dark:text-green-400">المطور</span>
-                    <span className="font-medium text-green-800 dark:text-green-300">AI Medical Lab</span>
-                  </div>
+            <div className="medical-card">
+              <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3">
+                المميزات الرئيسية
+              </h3>
+              <ul className="space-y-2 text-sm text-green-700 dark:text-green-400">
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  تحليل تلقائي بدقة عالية
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  دعم الفيديو والصور الثابتة
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  تحليل مورفولوجي متقدم
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  تقارير شاملة قابلة للتصدير
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  واجهة سهلة الاستخدام
+                </li>
+              </ul>
+            </div>
+
+            <div className="medical-card">
+              <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3">
+                معلومات تقنية
+              </h3>
+              <div className="space-y-2 text-sm text-green-700 dark:text-green-400">
+                <div className="flex justify-between">
+                  <span>الإصدار:</span>
+                  <span className="font-medium">2.0.0</span>
                 </div>
+                <div className="flex justify-between">
+                  <span>تاريخ آخر تحديث:</span>
+                  <span className="font-medium">يناير 2025</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>دقة التحليل:</span>
+                  <span className="font-medium">95%+</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>أنواع الملفات المدعومة:</span>
+                  <span className="font-medium">MP4, AVI, JPEG, PNG</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="medical-card">
+              <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3">
+                الدعم والمساعدة
+              </h3>
+              <p className="text-sm text-green-700 dark:text-green-400 mb-3">
+                للحصول على المساعدة التقنية أو الاستفسارات الطبية، يرجى التواصل معنا.
+              </p>
+              <div className="flex gap-2">
+                <button className="medical-button-secondary text-sm flex-1">
+                  دليل الاستخدام
+                </button>
+                <button className="medical-button-secondary text-sm flex-1">
+                  تواصل معنا
+                </button>
               </div>
             </div>
           </div>
@@ -208,26 +271,19 @@ const IndexContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="app-container">
       <MobileHeader onSettingsClick={() => setShowSettings(true)} />
-      
-      <main className="pt-4">
-        {renderTabContent()}
+
+      <main className="content">
+        <div className="container mx-auto px-4 py-8">
+          {renderTabContent()}
+        </div>
       </main>
 
-      <MobileBottomNav 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab} 
-      />
-    </div>
-  );
-};
+      <MobileBottomNav activeTab={activeTab} onTabChange={setActiveTab} />
 
-const Index = () => {
-  return (
-    <LanguageProvider>
-      <IndexContent />
-    </LanguageProvider>
+      <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
+    </div>
   );
 };
 
