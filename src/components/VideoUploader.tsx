@@ -1,6 +1,5 @@
-
 import React, { useState, useRef } from 'react';
-import { Upload, Video, FileText, CheckCircle, AlertCircle, Camera } from 'lucide-react';
+import { Upload, Video, FileText, CheckCircle, AlertCircle, Camera, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -32,7 +31,7 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
 
     setSelectedFile(file);
     onVideoSelect(file);
-    toast.success('تم اختيار الفيديو. جاري بدء التحليل المجاني...');
+    toast.success('تم اختيار الفيديو. سيتم إرساله للخادم الخلفي للتحليل...');
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -66,7 +65,7 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2 rtl:space-x-reverse text-medical-primary text-lg">
           <Video className="h-5 w-5" />
-          <span>رفع فيديو مجاني</span>
+          <span>رفع فيديو للتحليل بالذكاء الاصطناعي</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -98,7 +97,7 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
                 size={isMobile ? "sm" : "default"}
               >
                 <Upload className="mr-2 h-4 w-4" />
-                {isAnalyzing ? 'جاري التحليل...' : 'اختيار من الملفات'}
+                {isAnalyzing ? 'جاري المعالجة...' : 'اختيار من الملفات'}
               </Button>
 
               {isMobile && (
@@ -160,14 +159,14 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
                   {!isAnalyzing && (
                     <div className="flex items-center mt-2 text-green-600">
                       <CheckCircle className="h-3 md:h-4 w-3 md:w-4 mr-2" />
-                      <span className="text-xs md:text-sm">جاهز للتحليل المجاني</span>
+                      <span className="text-xs md:text-sm">جاهز للتحليل</span>
                     </div>
                   )}
 
                   {isAnalyzing && (
                     <div className="flex items-center mt-2 text-blue-600">
                       <div className="animate-spin h-3 md:h-4 w-3 md:w-4 border-2 border-blue-600 border-t-transparent rounded-full mr-2"></div>
-                      <span className="text-xs md:text-sm">جاري التحليل المجاني بالذكاء الاصطناعي...</span>
+                      <span className="text-xs md:text-sm">جاري التحليل بالذكاء الاصطناعي...</span>
                     </div>
                   )}
                 </div>
@@ -189,6 +188,25 @@ const VideoUploader = ({ onVideoSelect, isAnalyzing }: VideoUploaderProps) => {
                   <li>• العينة مركزة تحت المجهر بوضوح</li>
                   <li>• تجنب الاهتزاز أثناء التصوير</li>
                   <li>• استخدم إضاءة مناسبة ومتجانسة</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* معلومات الذكاء الاصطناعي */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3 md:p-4">
+            <div className="flex items-start space-x-2 rtl:space-x-reverse">
+              <Cpu className="h-4 md:h-5 w-4 md:w-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-medium text-green-800 mb-2 text-sm md:text-base">
+                  نظام الذكاء الاصطناعي المتقدم:
+                </h4>
+                <ul className="text-xs md:text-sm text-green-700 space-y-1">
+                  <li>• كشف باستخدام YOLOv8 عالي الدقة</li>
+                  <li>• تتبع الحركة بـ DeepSORT</li>
+                  <li>• معالجة بـ OpenCV المحترف</li>
+                  <li>• تسريع GPU للمعالجة السريعة</li>
+                  <li>• نتائج مفصلة مع إحداثيات دقيقة</li>
                 </ul>
               </div>
             </div>

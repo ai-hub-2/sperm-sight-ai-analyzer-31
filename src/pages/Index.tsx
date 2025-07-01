@@ -4,15 +4,28 @@ import MobileBottomNav from '@/components/MobileBottomNav';
 import SettingsModal from '@/components/SettingsModal';
 import UploadZone from '@/components/UploadZone';
 import ResultsDashboard from '@/components/ResultsDashboard';
+import AIModelConfig from '@/components/AIModelConfig';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Activity, BarChart3, FileVideo, Image } from 'lucide-react';
-import { useSpermAnalysis } from '@/hooks/useSpermAnalysis';
+import { Activity, BarChart3, FileVideo, Image, Settings } from 'lucide-react';
+import { useRealAIAnalysis } from '@/hooks/useRealAIAnalysis';
+import { defaultAnalysisConfig } from '@/services/aiAnalysisService';
 
 const Index = () => {
   const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('home');
   const [showSettings, setShowSettings] = useState(false);
-  const { results, currentResult, fetchResults, exportResults, deleteResult } = useSpermAnalysis();
+  const [showModelConfig, setShowModelConfig] = useState(false);
+  const { 
+    results, 
+    currentResult, 
+    fetchResults, 
+    exportResults, 
+    deleteResult,
+    updateModelConfig,
+    isAnalyzing,
+    uploadProgress,
+    analysisProgress
+  } = useRealAIAnalysis();
 
   useEffect(() => {
     fetchResults();
@@ -56,11 +69,83 @@ const Index = () => {
                 </div>
               </div>
             </div>
+            
+            {/* إضافة زر إعدادات النموذج */}
+            <div className="medical-card">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">
+                  نظام الذكاء الاصطناعي
+                </h3>
+                <button
+                  onClick={() => setShowModelConfig(true)}
+                  className="medical-button-secondary text-sm"
+                >
+                  <Settings className="w-4 h-4 mr-2" />
+                  إعدادات النموذج
+                </button>
+              </div>
+              
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-green-600 dark:text-green-400">النموذج النشط:</span>
+                  <span className="font-medium text-green-800 dark:text-green-300">YOLOv8n</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-green-600 dark:text-green-400">حالة الخادم:</span>
+                  <span className="font-medium text-green-800 dark:text-green-300">متصل</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-green-600 dark:text-green-400">تسريع GPU:</span>
+                  <span className="font-medium text-green-800 dark:text-green-300">مفعل</span>
+                </div>
+              </div>
+            </div>
           </div>
         );
 
       case 'upload':
-        return <UploadZone />;
+        return (
+          <div className="space-y-6">
+            <UploadZone />
+            
+            {/* عرض التقدم إذا كان التحليل جارياً */}
+            {isAnalyzing && (
+              <div className="medical-card">
+                <h3 className="font-semibold text-green-800 dark:text-green-300 mb-4">
+                  حالة التحليل
+                </h3>
+                
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm">رفع الملف</span>
+                      <span className="text-sm">{Math.round(uploadProgress)}%</span>
+                    </div>
+                    <div className="w-full bg-green-200 dark:bg-green-800 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-sm">تحليل AI</span>
+                      <span className="text-sm">{Math.round(analysisProgress)}%</span>
+                    </div>
+                    <div className="w-full bg-green-200 dark:bg-green-800 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${analysisProgress}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
 
       case 'results':
         return (
@@ -262,6 +347,39 @@ const Index = () => {
                 </button>
               </div>
             </div>
+            
+            {/* إضافة معلومات تقنية محدثة */}
+            <div className="medical-card">
+              <h3 className="font-semibold text-green-800 dark:text-green-300 mb-3">
+                المواصفات التقنية
+              </h3>
+              <div className="space-y-2 text-sm text-green-700 dark:text-green-400">
+                <div className="flex justify-between">
+                  <span>نموذج الكشف:</span>
+                  <span className="font-medium">YOLOv8n/s/m</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>نموذج التتبع:</span>
+                  <span className="font-medium">DeepSORT</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>معالجة الصور:</span>
+                  <span className="font-medium">OpenCV 4.8+</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>الخادم الخلفي:</span>
+                  <span className="font-medium">Python FastAPI</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>قاعدة البيانات:</span>
+                  <span className="font-medium">Supabase PostgreSQL</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>التطبيق المحمول:</span>
+                  <span className="font-medium">Capacitor Android</span>
+                </div>
+              </div>
+            </div>
           </div>
         );
 
@@ -283,6 +401,25 @@ const Index = () => {
       <MobileBottomNav activeTab={activeTab} onTabChange={setActiveTab} />
 
       <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
+      
+      {showModelConfig && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <AIModelConfig
+              currentConfig={defaultAnalysisConfig}
+              onConfigChange={updateModelConfig}
+            />
+            <div className="mt-4 text-right">
+              <button
+                onClick={() => setShowModelConfig(false)}
+                className="medical-button-primary"
+              >
+                إغلاق
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
