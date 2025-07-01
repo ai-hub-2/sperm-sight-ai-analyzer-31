@@ -61,7 +61,7 @@ const Index = () => {
                 </div>
                 <div className="medical-card text-center">
                   <div className="text-2xl font-bold text-green-700 dark:text-green-300">
-                    {results.length > 0 ? Math.round(results.reduce((acc, r) => acc + (r.motility || 0), 0) / results.length) : 0}%
+                    {results.length > 0 ? Math.round(results.reduce((acc, r) => acc + (r.motility_percent || 0), 0) / results.length) : 0}%
                   </div>
                   <div className="text-sm text-green-600 dark:text-green-400">
                     متوسط الحركة
@@ -175,7 +175,7 @@ const Index = () => {
                     totalCount: currentResult.sperm_count,
                     motileCount: currentResult.total_motile_count || 0,
                     averageSpeed: currentResult.speed_avg,
-                    motilityPercentage: currentResult.motility || 0,
+                    motilityPercentage: currentResult.motility_percent || 0,
                     concentration: currentResult.concentration || 0,
                     morphologyNormal: currentResult.morphology?.normal || 0
                   }}
@@ -232,7 +232,7 @@ const Index = () => {
                       <div>
                         <span className="text-green-600 dark:text-green-400">الحركة: </span>
                         <span className="font-medium text-green-800 dark:text-green-300">
-                          {result.motility || 0}%
+                          {result.motility_percent || 0}%
                         </span>
                       </div>
                       <div>
