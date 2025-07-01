@@ -9,7 +9,54 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      analysis_results: {
+        Row: {
+          concentration: number | null
+          created_at: string
+          filename: string
+          id: string
+          morphology: Json | null
+          motility: number | null
+          movement_pattern: Json | null
+          processing_time_seconds: number | null
+          speed_avg: number
+          sperm_count: number
+          total_motile_count: number | null
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          concentration?: number | null
+          created_at?: string
+          filename: string
+          id?: string
+          morphology?: Json | null
+          motility?: number | null
+          movement_pattern?: Json | null
+          processing_time_seconds?: number | null
+          speed_avg: number
+          sperm_count: number
+          total_motile_count?: number | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          concentration?: number | null
+          created_at?: string
+          filename?: string
+          id?: string
+          morphology?: Json | null
+          motility?: number | null
+          movement_pattern?: Json | null
+          processing_time_seconds?: number | null
+          speed_avg?: number
+          sperm_count?: number
+          total_motile_count?: number | null
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
