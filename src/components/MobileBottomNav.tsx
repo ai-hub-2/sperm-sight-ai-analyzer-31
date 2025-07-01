@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Upload, BarChart3, Info } from 'lucide-react';
+import { Home, Upload, BarChart3, Circle } from 'lucide-react';
 
 interface MobileBottomNavProps {
   activeTab: string;
@@ -9,15 +9,15 @@ interface MobileBottomNavProps {
 
 const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
   const tabs = [
-    { id: 'dashboard', label: 'الرئيسية', icon: Home },
-    { id: 'upload', label: 'تحليل', icon: Upload },
+    { id: 'home', label: 'الرئيسية', icon: Home },
+    { id: 'upload', label: 'رفع', icon: Upload },
     { id: 'results', label: 'النتائج', icon: BarChart3 },
-    { id: 'about', label: 'حول', icon: Info },
+    { id: 'about', label: 'حول', icon: Circle },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 glass-card border-t border-white/20 px-3 py-3 z-50 backdrop-blur-xl">
-      <div className="flex justify-around items-center max-w-md mx-auto">
+    <nav className="bottom-nav">
+      <div className="flex">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -26,21 +26,20 @@ const MobileBottomNav = ({ activeTab, onTabChange }: MobileBottomNavProps) => {
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300 min-w-0 flex-1 mx-1 ${
-                isActive
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg transform scale-105'
-                  : 'text-gray-400 hover:text-white hover:bg-white/10'
-              }`}
+              className={`nav-item ${isActive ? 'active' : ''}`}
             >
-              <Icon className={`h-6 w-6 mb-1 ${isActive ? 'animate-pulse' : ''}`} />
-              <span className="text-xs font-semibold truncate">
+              <Icon className="w-5 h-5 mb-1" />
+              <span className="text-xs font-medium">
                 {tab.label}
               </span>
+              {isActive && (
+                <div className="absolute -top-0.5 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"></div>
+              )}
             </button>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -1,151 +1,137 @@
 
 import React, { useState } from 'react';
-import MedicalHeader from '@/components/MedicalHeader';
-import VideoUploader from '@/components/VideoUploader';
-import AnalysisResults from '@/components/AnalysisResults';
-import Dashboard from '@/components/Dashboard';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import MobileHeader from '@/components/MobileHeader';
+import UploadZone from '@/components/UploadZone';
+import ResultsDashboard from '@/components/ResultsDashboard';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import { useSpermAnalysis } from '@/hooks/useSpermAnalysis';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-const Index = () => {
+const IndexContent = () => {
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const { isAnalyzing, analyzeVideo } = useSpermAnalysis();
+  const [activeTab, setActiveTab] = useState('home');
+  const { isAnalyzing, analyzeVideo, currentResult } = useSpermAnalysis();
   const isMobile = useIsMobile();
 
   const handleVideoSelect = async (file: File) => {
     setSelectedVideo(file);
     try {
       await analyzeVideo(file);
+      setActiveTab('results');
     } catch (error) {
       console.error('فشل في تحليل الفيديو:', error);
     }
   };
 
+  const mockResultsData = {
+    totalCount: currentResult?.sperm_count || 1250,
+    motileCount: currentResult?.sperm_count ? Math.floor(currentResult.sperm_count * 0.65) : 812,
+    averageSpeed: currentResult?.speed_avg || 45.2,
+    motilityPercentage: currentResult?.motility || 65,
+    concentration: currentResult?.concentration || 35.4,
+    morphologyNormal: 78
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'dashboard':
+      case 'home':
         return (
-          <div className="space-y-8 px-2">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
-                مرحباً بك في منصة التحليل الذكي
+          <div className="space-y-6 px-4 pb-20">
+            <div className="text-center py-8">
+              <h2 className="text-2xl font-bold text-foreground mb-3">
+                مرحبًا بك في نظام التحليل الذكي
               </h2>
-              <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                تطبيق متطور يستخدم أحدث تقنيات الذكاء الاصطناعي لتحليل مقاطع الفيديو بدقة عالية
+              <p className="text-muted-foreground text-base leading-relaxed">
+                تقنية متطورة لتحليل الحيوانات المنوية باستخدام الذكاء الاصطناعي
               </p>
             </div>
-            <Dashboard />
+            <UploadZone 
+              onVideoSelect={handleVideoSelect}
+              isAnalyzing={isAnalyzing}
+            />
           </div>
         );
 
       case 'upload':
         return (
-          <div className="space-y-8 px-2">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-3">
-                رفع فيديو جديد للتحليل
+          <div className="space-y-6 px-4 pb-20">
+            <div className="text-center py-4">
+              <h2 className="text-xl font-bold text-foreground mb-2">
+                رفع فيديو جديد
               </h2>
-              <p className="text-gray-300 text-lg">
-                قم برفع الفيديو للحصول على تحليل دقيق ومفصل
+              <p className="text-muted-foreground">
+                اختر الفيديو المراد تحليله
               </p>
             </div>
-            
-            <div className="space-y-6">
-              <VideoUploader 
-                onVideoSelect={handleVideoSelect}
-                isAnalyzing={isAnalyzing}
-              />
-              
-              <AnalysisResults 
-                isAnalyzing={isAnalyzing}
-                videoFile={selectedVideo}
-              />
-            </div>
+            <UploadZone 
+              onVideoSelect={handleVideoSelect}
+              isAnalyzing={isAnalyzing}
+            />
           </div>
         );
 
       case 'results':
         return (
-          <div className="space-y-8 px-2">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-3">
-                نتائج التحليل
-              </h2>
-              <p className="text-gray-300 text-lg">
-                استعرض نتائج التحاليل المحفوظة
-              </p>
-            </div>
-            
-            <AnalysisResults 
-              isAnalyzing={isAnalyzing}
-              videoFile={selectedVideo}
+          <div className="px-4 pb-20">
+            <ResultsDashboard 
+              data={mockResultsData}
+              isLoading={isAnalyzing}
             />
           </div>
         );
 
       case 'about':
         return (
-          <div className="space-y-8 px-2">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-3">
+          <div className="space-y-6 px-4 pb-20">
+            <div className="text-center py-8">
+              <h2 className="text-2xl font-bold text-foreground mb-3">
                 حول التطبيق
               </h2>
-              <p className="text-gray-300 text-lg">
-                تعرف على التقنيات والمميزات المتطورة
+              <p className="text-muted-foreground">
+                نظام متطور لتحليل العينات الطبية
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="glass-card p-8 interactive-hover">
-                <div className="bg-gradient-to-r from-blue-500 to-cyan-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                  <span className="text-2xl">🔬</span>
-                </div>
-                <h3 className="text-xl font-bold text-emerald-400 mb-4 text-center">التقنيات المستخدمة</h3>
-                <ul className="text-gray-300 space-y-3">
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    <span>تحليل بالذكاء الاصطناعي YOLOv8</span>
+            <div className="space-y-4">
+              <div className="medical-card">
+                <h3 className="font-semibold text-foreground mb-3">المميزات الرئيسية</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    تحليل بالذكاء الاصطناعي عالي الدقة
                   </li>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-cyan-400 rounded-full"></span>
-                    <span>تتبع الكائنات DeepSORT</span>
+                  <li className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    نتائج سريعة ومفصلة
                   </li>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                    <span>معالجة الفيديو المتقدمة</span>
+                  <li className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    واجهة سهلة الاستخدام
                   </li>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-pink-400 rounded-full"></span>
-                    <span>تقارير تفاعلية مفصلة</span>
+                  <li className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    دعم كامل للغة العربية
                   </li>
                 </ul>
               </div>
 
-              <div className="glass-card p-8 interactive-hover">
-                <div className="bg-gradient-to-r from-green-500 to-emerald-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                  <span className="text-2xl">🎯</span>
+              <div className="medical-card">
+                <h3 className="font-semibold text-foreground mb-3">معلومات التطبيق</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">الإصدار</span>
+                    <span className="font-medium">1.0.0</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">تاريخ الإصدار</span>
+                    <span className="font-medium">2024</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">المطور</span>
+                    <span className="font-medium">AI Medical Lab</span>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-cyan-400 mb-4 text-center">المميزات الرئيسية</h3>
-                <ul className="text-gray-300 space-y-3">
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>واجهة حديثة وسهلة الاستخدام</span>
-                  </li>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
-                    <span>نتائج سريعة ودقيقة</span>
-                  </li>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
-                    <span>متوافق مع جميع الأجهزة</span>
-                  </li>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="w-2 h-2 bg-red-400 rounded-full"></span>
-                    <span>تصدير التقارير بصيغ متعددة</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -157,47 +143,26 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <MedicalHeader />
+    <div className="min-h-screen bg-background">
+      <MobileHeader />
       
-      <main className="container mx-auto py-8 pb-24 md:pb-12 max-w-6xl">
+      <main className="pt-4">
         {renderTabContent()}
       </main>
 
-      {isMobile && (
-        <MobileBottomNav 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-        />
-      )}
-
-      {!isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 glass-card border-t border-white/10 px-4 py-4 z-50">
-          <div className="container mx-auto max-w-6xl">
-            <div className="flex justify-center space-x-4 rtl:space-x-reverse">
-              {[
-                { id: 'dashboard', label: 'الرئيسية' },
-                { id: 'upload', label: 'تحليل جديد' },
-                { id: 'results', label: 'النتائج' },
-                { id: 'about', label: 'حول التطبيق' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                    activeTab === tab.id
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg transform scale-105'
-                      : 'glass-card text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <MobileBottomNav 
+        activeTab={activeTab} 
+        onTabChange={setActiveTab} 
+      />
     </div>
+  );
+};
+
+const Index = () => {
+  return (
+    <LanguageProvider>
+      <IndexContent />
+    </LanguageProvider>
   );
 };
 
